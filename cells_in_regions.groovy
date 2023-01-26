@@ -1,5 +1,4 @@
 import static qupath.lib.gui.scripting.QPEx.* // For intellij editor autocompletion
-import static ch.epfl.biop.qupath.atlas.allen.api.AtlasTools.*
 
 import qupath.lib.objects.PathObjects
 import qupath.lib.roi.ROIs
@@ -7,7 +6,8 @@ import qupath.lib.regions.ImagePlane
 import qupath.lib.measurements.MeasurementList
 import qupath.lib.objects.PathCellObject
 
-import ch.epfl.biop.qupath.transform.*
+import qupath.ext.biop.warpy.Warpy
+import qupath.ext.biop.abba.AtlasTools
 import net.imglib2.RealPoint
 
 useSmallArea = false;
@@ -38,7 +38,7 @@ clearSelectedObjects();
 // load warped Allen regions
 def imageData = getCurrentImageData();
 def splitLeftRight = true;
-loadWarpedAtlasAnnotations(imageData, splitLeftRight);
+qupath.ext.biop.abba.AtlasTools.loadWarpedAtlasAnnotations(getCurrentImageData(), "acronym", false);
 
 // select all cells and insert them into hierarchy
 //clearSelectedObjects();
