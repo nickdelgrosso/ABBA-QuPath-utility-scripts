@@ -11,8 +11,11 @@ tar -xf fiji-win64.zip
 
 
 IF NOT EXIST QuPath-0.4.2-Windows.msi curl -LJ0 https://github.com/qupath/qupath/releases/download/v0.4.2/QuPath-0.4.2-Windows.msi --output QuPath-0.4.2-Windows.msi
+mkdir qupath-extension-abba-0.1.4
+cd qupath-extension-abba-0.1.4
 IF NOT EXIST qupath-extension-abba-0.1.4.zip curl -LJ0 https://github.com/BIOP/qupath-extension-abba/releases/download/0.1.4/qupath-extension-abba-0.1.4.zip --output qupath-extension-abba-0.1.4.zip
 tar -xf qupath-extension-abba-0.1.4.zip
+cd ..
 mkdir "QuPath Common Data"\extensions
 move qupath-extension-abba-0.1.4 "QuPath Common Data\extensions"
 
@@ -20,7 +23,7 @@ IF NOT EXIST elastix-5.0.1-win64.zip curl -LJ0 https://github.com/SuperElastix/e
 tar -xf elastix-5.0.1-win64.zip
 
 
-IF NOT EXIST TestRegister.groovy curl -LJ0 https://gist.githubusercontent.com/NicoKiaru/b91f9f3f0069b765a49b5d4629a8b1c7/raw/571954a443d1e1f0597022f6c19f042aefbc0f5a/TestRegister.groovy --output TestRegister.groovy
+IF NOT EXIST TestRegister.groovy curl -LJ0 https://gist.githubusercontent.com/NicoKiaru/b91f9f3f0069b765a49b5d4629a8b1c7/raw/0744676341b16ee4f37ed203130f0e0b761c08c8/TestRegister.groovy --output TestRegister.groovy
 
 IF NOT EXIST vc_redist.x64.exe curl -LJ0 https://aka.ms/vs/16/release/vc_redist.x64.exe --output vc_redist.x64.exe
 
