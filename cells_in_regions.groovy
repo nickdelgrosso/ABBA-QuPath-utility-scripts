@@ -38,7 +38,7 @@ clearSelectedObjects();
 // load warped Allen regions
 def imageData = getCurrentImageData();
 def splitLeftRight = true;
-qupath.ext.biop.abba.AtlasTools.loadWarpedAtlasAnnotations(getCurrentImageData(), "acronym", false);
+qupath.ext.biop.abba.AtlasTools.loadWarpedAtlasAnnotations(getCurrentImageData(), "acronym", true);
 
 // select all cells and insert them into hierarchy
 //clearSelectedObjects();
@@ -47,7 +47,21 @@ selectCells();
 def selectedObjects = getCurrentImageData().getHierarchy().getSelectionModel().getSelectedObjects();
 insertObjects(selectedObjects);
 
-// run Subcellular Spot Detection
+def left = getAnnotationObjects().find{it.getPathClass() =~ /Left: root/ }
+def right = getAnnotationObjects().find{it.getPathClass() =~ /Right: root/ }
+
+def cells = getDetectionObjects()
+cells.each{c -> 
+        if (left.getROI().contains(c.getROI().getCentroidX(), c.getROI().getCentroidY())) {
+            c.getMeasurementList().putMeasurement('Left', 1)
+        } else if (right.getROI().contains(c.getROI().getCentroidX(), c.getROI().getCentroidY())) {
+            c.getMeasurementList().putMeasurement('Left', 0)
+        } else {
+            c.getMeasurementList().putMeasurement('Left', -1)
+        }
+    }
+
+run Subcellular Spot Detection
 runPlugin('qupath.imagej.detect.cells.SubcellularDetection', '{"detection[Channel 1]": -1.0,  "detection[Channel 2]": 0.4,  "detection[Channel 3]": 0.3,  "detection[Channel 4]": 0.15,  "detection[Channel 5]": 0.2,  "detection[Channel 6]": -1.0,  "detection[Channel 7]": -1.0,  "doSmoothing": false,  "splitByIntensity": true,  "splitByShape": true,  "spotSizeMicrons": 0.5,  "minSpotSizeMicrons": 0.2,  "maxSpotSizeMicrons": 7.0,  "includeClusters": false}');
 
 def pixelToAtlasTransform = 
@@ -64,7 +78,6 @@ getDetectionObjects().forEach(detection -> {
     ml.putMeasurement("Atlas_Y", atlasCoordinates.getDoublePosition(1) )
     ml.putMeasurement("Atlas_Z", atlasCoordinates.getDoublePosition(2) )
 })
-
 
 
 // change cell name to replace name with unique ID number
