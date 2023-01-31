@@ -61,9 +61,6 @@ cells.each{c ->
         }
     }
 
-run Subcellular Spot Detection
-runPlugin('qupath.imagej.detect.cells.SubcellularDetection', '{"detection[Channel 1]": -1.0,  "detection[Channel 2]": 0.4,  "detection[Channel 3]": 0.3,  "detection[Channel 4]": 0.15,  "detection[Channel 5]": 0.2,  "detection[Channel 6]": -1.0,  "detection[Channel 7]": -1.0,  "doSmoothing": false,  "splitByIntensity": true,  "splitByShape": true,  "spotSizeMicrons": 0.5,  "minSpotSizeMicrons": 0.2,  "maxSpotSizeMicrons": 7.0,  "includeClusters": false}');
-
 def pixelToAtlasTransform = 
     qupath.ext.biop.abba.AtlasTools
     .getAtlasToPixelTransform(getCurrentImageData())
@@ -79,25 +76,8 @@ getDetectionObjects().forEach(detection -> {
     ml.putMeasurement("Atlas_Z", atlasCoordinates.getDoublePosition(2) )
 })
 
-
-// change cell name to replace name with unique ID number
-counter = 1
-
-selectDetections()
-detections = getSelectedObjects()
-
-for (detection in detections) {
-    if (detection.class.equals(PathCellObject.class)) {
-        detection.setName(counter.toString());
-        ++counter
-    } else {
-        detection.setName('');
-    }
-}
-
-
 // save annotations
-File directory = new File(buildFilePath(PROJECT_BASE_DIR,'export2'));
+File directory = new File(buildFilePath(PROJECT_BASE_DIR,'export'));
 directory.mkdirs();
 imageName = ServerTools.getDisplayableImageName(imageData.getServer())
 saveAnnotationMeasurements(buildFilePath(directory.toString(),imageName+'__annotations.tsv'));
