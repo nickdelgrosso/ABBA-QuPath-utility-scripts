@@ -5,25 +5,25 @@ cd programs
 
 IF NOT EXIST fiji-win64.zip curl -LJ0 https://downloads.imagej.net/fiji/latest/fiji-win64.zip --output fiji-win64.zip
 tar -xf fiji-win64.zip
-.\Fiji.app\Imagej-win64.exe --update add-update-site "ABBA (experimental) 2" https://biop.epfl.ch/Fiji-ABBA/
-.\Fiji.app\Imagej-win64.exe --update add-update-site "BigDataViewer-Playground 2" https://biop.epfl.ch/Fiji-Bdv-Playground/
+.\Fiji.app\Imagej-win64.exe --update add-update-site "PTBIOP" https://biop.epfl.ch/Fiji-Update/
 .\Fiji.app\Imagej-win64.exe --update update
 
 
 
-IF NOT EXIST QuPath-0.2.3-Windows.msi curl -LJ0 https://github.com/qupath/qupath/releases/download/v0.2.3/QuPath-0.2.3-Windows.msi --output QuPath-0.2.3-Windows.msi
-IF NOT EXIST biop-tools-2.0.8.jar curl -LJ0 https://github.com/BIOP/qupath-biop-extensions/releases/download/v2.0.8/biop-tools-2.0.8.jar --output biop-tools-2.0.8.jar
-IF NOT EXIST WSI-Dependencies.zip curl -LJ0 https://github.com/BIOP/qupath-biop-extensions/releases/download/v2.0.8/WSI-Dependencies.zip --output WSI-Dependencies.zip
-tar -xf WSI-Dependencies.zip
+IF NOT EXIST QuPath-0.4.2-Windows.msi curl -LJ0 https://github.com/qupath/qupath/releases/download/v0.4.2/QuPath-0.4.2-Windows.msi --output QuPath-0.4.2-Windows.msi
+mkdir qupath-extension-abba-0.1.4
+cd qupath-extension-abba-0.1.4
+IF NOT EXIST qupath-extension-abba-0.1.4.zip curl -LJ0 https://github.com/BIOP/qupath-extension-abba/releases/download/0.1.4/qupath-extension-abba-0.1.4.zip --output qupath-extension-abba-0.1.4.zip
+tar -xf qupath-extension-abba-0.1.4.zip
+cd ..
 mkdir "QuPath Common Data"\extensions
-move WSI-Dependencies "QuPath Common Data\extensions"
-move  biop-tools-2.0.8.jar "QuPath Common Data\extensions"
+move qupath-extension-abba-0.1.4 "QuPath Common Data\extensions"
 
 IF NOT EXIST elastix-5.0.1-win64.zip curl -LJ0 https://github.com/SuperElastix/elastix/releases/download/5.0.1/elastix-5.0.1-win64.zip --output elastix-5.0.1-win64.zip
 tar -xf elastix-5.0.1-win64.zip
 
 
-IF NOT EXIST TestRegister.groovy curl -LJ0 https://gist.githubusercontent.com/NicoKiaru/b91f9f3f0069b765a49b5d4629a8b1c7/raw/571954a443d1e1f0597022f6c19f042aefbc0f5a/TestRegister.groovy --output TestRegister.groovy
+IF NOT EXIST TestRegister.groovy curl -LJ0 https://gist.githubusercontent.com/NicoKiaru/b91f9f3f0069b765a49b5d4629a8b1c7/raw/0744676341b16ee4f37ed203130f0e0b761c08c8/TestRegister.groovy --output TestRegister.groovy
 
 IF NOT EXIST vc_redist.x64.exe curl -LJ0 https://aka.ms/vs/16/release/vc_redist.x64.exe --output vc_redist.x64.exe
 
@@ -32,7 +32,7 @@ IF NOT EXIST vc_redist.x64.exe curl -LJ0 https://aka.ms/vs/16/release/vc_redist.
 
 :: In Fiji:
 ::   Click `Help > Update… > Manage update sites
-::   Tick the checkbox ABBA (experimental)
+::   Tick the checkbox PTBIOP
 ::   Click Close
 ::   Click Apply changes
 ::   Restart Fiji
